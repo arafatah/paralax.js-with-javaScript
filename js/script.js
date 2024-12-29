@@ -1,17 +1,20 @@
 const scenes = document.querySelectorAll(".scene");
+// initial styles
+scenes.forEach((scene) => {
+  scene.style.position = "relative";
+  scene.style.transform = "translate3d(0px, 0px, 0px)";
+  scene.style.transformStyle = "preserve-3d";
+  scene.style.backfaceVisibility = "hidden";
+});
 
 document.addEventListener("mousemove", (e) => {
-  // Get mouse position relative to the center of the viewport
+  // mouse position relative to the center of the viewport
   const xPos = (e.clientX - window.innerWidth / 2) / 100;
   const yPos = (e.clientY - window.innerHeight / 2) / 100;
 
-  const multipliers = [2, 1.5, 3, 2.5];
-
-  scenes.forEach((scene, index) => {
-    // Apply transform with different intensity for each box
-    scene.style.transform = `translate3d(${xPos * multipliers[index]}px, ${
-      yPos * multipliers[index]
-    }px, 0)`;
+  scenes.forEach((scene) => {
+    const depth = scene.dataset.depth || 1;
+    scene.style.transform = `translate3d(${xPos * depth}px, ${yPos * depth}px, 0)`;
     scene.style.transformStyle = "preserve-3d";
     scene.style.backfaceVisibility = "hidden";
     scene.style.transition = "transform 0.1s ease-out";
@@ -25,10 +28,3 @@ document.addEventListener("mousemove", (e) => {
   container.style.transition = "transform 0.1s ease-out";
 });
 
-// Add some initial styles programmatically
-scenes.forEach((scene) => {
-  scene.style.position = "relative";
-  scene.style.transform = "translate3d(0px, 0px, 0px)";
-  scene.style.transformStyle = "preserve-3d";
-  scene.style.backfaceVisibility = "hidden";
-});
